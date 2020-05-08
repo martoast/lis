@@ -28,7 +28,8 @@
               <div>{{Product.name}}</div>
 
               <div>{{Product.type}}</div>
-              <div>$12.95</div>
+              <div>{{Product.price}}</div>
+              <!-- <h2>{{Product.price.get("gram")}}</h2> -->
             </v-card-text>
 
             <v-card-actions>
@@ -43,7 +44,7 @@
 
               <v-select
                 v-model="select"
-                :items="items"
+                :items="Product.items"
                 :rules="[v => !!v || 'Item is required']"
                 label="select amount*"
                 required
@@ -67,20 +68,23 @@ export default {
         {
           name: "GIRL SCOUT COOKIES (EXOTIC)",
           type: "HYBRID",
-          price: { gram: 12.95, eigth: 60, quarter: 110, oz: 220 },
+          items: ["Gram", "1/8", "1/4", "OZ"],
+          price: { gram: 12.95, eigth: 60, quarter: 110, oz: 666 },
           image: "http://textimages.mobi/Img/J9I0QL2NBKH7AL474XPF.jpg",
           details: ""
         },
         {
           name: "TANGIE DREAM (EXOTIC)",
           type: "SATIVA",
-          price: { gram: 12.95, eigth: 60, quarter: 110, oz: 220 },
+          items: ["Gram", "1/8", "1/4", "OZ"],
+          price: { gram: 2.95, eigth: 60, quarter: 110, oz: 420 },
           image: "http://textimages.mobi/Img/J9I0QL2NBKH7AL474XPF.jpg",
           details: ""
         },
         {
           name: "DUTCH TREAT (EXOTIC)",
           type: "HYBRID",
+          items: ["Gram", "1/8", "1/4", "OZ"],
           price: { gram: 12.95, eigth: 60, quarter: 110, oz: 220 },
           image: "http://textimages.mobi/Img/J9I0QL2NBKH7AL474XPF.jpg",
           details: ""
@@ -88,13 +92,15 @@ export default {
         {
           name: "ROLLEX OG KUSH (EXOTIC)",
           type: "INDICA",
-          price: { gram: 12.95, eigth: 60, quarter: 110, oz: 220 },
+          items: ["Gram", "1/8", "1/4", "OZ"],
+          price: { gram: 300, eigth: 60, quarter: 110, oz: 220 },
           image: "http://textimages.mobi/Img/J9I0QL2NBKH7AL474XPF.jpg",
           details: ""
         },
         {
           name: "SENSI STAR (EXOTIC)",
           type: "INDICA",
+          items: ["Gram", "1/8", "1/4", "OZ"],
           price: { gram: 12.95, eigth: 60, quarter: 110, oz: 220 },
           image: "http://textimages.mobi/Img/J9I0QL2NBKH7AL474XPF.jpg",
           details: ""
@@ -102,6 +108,7 @@ export default {
         {
           name: "UK CHEESE (EXOTIC)",
           type: "HYBRID",
+          items: ["Gram", "1/8", "1/4", "OZ"],
           price: { gram: 12.95, eigth: 60, quarter: 110, oz: 220 },
           image: "http://textimages.mobi/Img/J9I0QL2NBKH7AL474XPF.jpg",
           details: ""
@@ -109,6 +116,7 @@ export default {
         {
           name: "GREEN QUEEN (EXOTIC)",
           type: "SATIVA",
+          items: ["Gram", "1/8", "1/4", "OZ"],
           price: { gram: 12.95, eigth: 60, quarter: 110, oz: 220 },
           image: "http://textimages.mobi/Img/J9I0QL2NBKH7AL474XPF.jpg",
           details: ""
@@ -116,6 +124,7 @@ export default {
         {
           name: "CLEMENTINE (EXOTIC)",
           type: "SATIVA",
+          items: ["Gram", "1/8", "1/4", "OZ"],
           price: { gram: 12.95, eigth: 60, quarter: 110, oz: 220 },
           image: "http://textimages.mobi/Img/J9I0QL2NBKH7AL474XPF.jpg",
           details: ""
@@ -123,23 +132,27 @@ export default {
         {
           name: "GREEN CRACK (EXOTIC)",
           type: "SATIVA",
+          items: ["Gram", "1/8", "1/4", "OZ"],
           price: { gram: 12.95, eigth: 60, quarter: 110, oz: 220 },
           image: "http://textimages.mobi/Img/J9I0QL2NBKH7AL474XPF.jpg",
           details: ""
         }
       ],
-      items: ["Gram", "1/8", "1/4", "OZ"],
+      // items: ["Gram", "1/8", "1/4", "OZ"],
       select: null
     };
   },
   computed: {
     // a computed getter
-    reversedMessage: function() {
+    FilteredPrice: function() {
       // `this` points to the vm instance
-      return this.message
-        .split("")
-        .reverse()
-        .join("");
+
+      if (this.select != null) {
+        // price = this.ProductList[0];
+        return this.ProductList[0].price;
+      } else {
+        return null;
+      }
     }
   }
 };
