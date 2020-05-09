@@ -115,6 +115,24 @@
               </v-card>
             </div>
 
+            <div v-if="select">
+              <v-row justify="center">
+                <v-btn @click="UpdateCart(Product, UpdateType='subtract')">
+                  -
+                </v-btn>
+                <!-- <span class="pa-6">{{Product.quantity}}</span> -->
+                <h2 class="pl-6 pr-6">
+                  {{Product.quantity}}
+
+                </h2>
+                <v-btn @click="UpdateCart(Product, UpdateType='add')">
+                  +
+                </v-btn>
+
+              </v-row>
+
+            </div>
+
             <v-card-actions>
 
               <v-btn
@@ -128,7 +146,7 @@
 
               <v-select
                 v-model="select"
-                :items="Product.items"
+                :items="Product.available"
                 :rules="[v => !!v || 'Item is required']"
                 label="select amount*"
                 required
@@ -155,79 +173,97 @@ export default {
       ProductList: [
         {
           name: "GIRL SCOUT COOKIES (EXOTIC)",
+          id: 1,
           type: "HYBRID",
-          items: ["Gram", "1/8", "1/4", "OZ"],
+          available: ["Gram", "eigth", "quarter", "OZ"],
           price: { gram: 12.95, eigth: 60, quarter: 110, oz: 666 },
           image: "http://textimages.mobi/Img/J9I0QL2NBKH7AL474XPF.jpg",
-          details: ""
+          details: "",
+          quantity: 0
         },
         {
           name: "TANGIE DREAM (EXOTIC)",
+          id: 2,
           type: "SATIVA",
-          items: ["Gram", "1/8", "1/4", "OZ"],
+          available: ["Gram", "eigth", "quarter", "OZ"],
           price: { gram: 2.95, eigth: 60, quarter: 110, oz: 420 },
           image: "http://textimages.mobi/Img/J9I0QL2NBKH7AL474XPF.jpg",
-          details: ""
+          details: "",
+          quantity: 0
         },
         {
           name: "DUTCH TREAT (EXOTIC)",
+          id: 3,
           type: "HYBRID",
-          items: ["Gram", "1/8", "1/4", "OZ"],
+          available: ["Gram", "eigth", "quarter", "OZ"],
           price: { gram: 12.95, eigth: 60, quarter: 110, oz: 220 },
           image: "http://textimages.mobi/Img/J9I0QL2NBKH7AL474XPF.jpg",
-          details: ""
+          details: "",
+          quantity: 0
         },
         {
           name: "ROLLEX OG KUSH (EXOTIC)",
+          id: 4,
           type: "INDICA",
-          items: ["Gram", "1/8", "1/4", "OZ"],
+          available: ["Gram", "eigth", "quarter", "OZ"],
           price: { gram: 300, eigth: 60, quarter: 110, oz: 220 },
           image: "http://textimages.mobi/Img/J9I0QL2NBKH7AL474XPF.jpg",
-          details: ""
+          details: "",
+          quantity: 0
         },
         {
           name: "SENSI STAR (EXOTIC)",
+          id: 5,
           type: "INDICA",
-          items: ["Gram", "1/8", "1/4", "OZ"],
+          available: ["Gram", "eigth", "quarter", "OZ"],
           price: { gram: 12.95, eigth: 60, quarter: 110, oz: 220 },
           image: "http://textimages.mobi/Img/J9I0QL2NBKH7AL474XPF.jpg",
-          details: ""
+          details: "",
+          quantity: 0
         },
         {
           name: "UK CHEESE (EXOTIC)",
+          id: 6,
           type: "HYBRID",
-          items: ["Gram", "1/8", "1/4", "OZ"],
+          available: ["Gram", "eigth", "quarter", "OZ"],
           price: { gram: 12.95, eigth: 60, quarter: 110, oz: 220 },
           image: "http://textimages.mobi/Img/J9I0QL2NBKH7AL474XPF.jpg",
-          details: ""
+          details: "",
+          quantity: 0
         },
         {
           name: "GREEN QUEEN (EXOTIC)",
+          id: 7,
           type: "SATIVA",
-          items: ["Gram", "1/8", "1/4", "OZ"],
+          available: ["Gram", "eigth", "quarter", "OZ"],
           price: { gram: 12.95, eigth: 60, quarter: 110, oz: 220 },
           image: "http://textimages.mobi/Img/J9I0QL2NBKH7AL474XPF.jpg",
-          details: ""
+          details: "",
+          quantity: 0
         },
         {
           name: "CLEMENTINE (EXOTIC)",
+          id: 8,
           type: "SATIVA",
-          items: ["Gram", "1/8", "1/4", "OZ"],
+          available: ["Gram", "eigth", "quarter", "OZ"],
           price: { gram: 12.95, eigth: 60, quarter: 110, oz: 220 },
           image: "http://textimages.mobi/Img/J9I0QL2NBKH7AL474XPF.jpg",
-          details: ""
+          details: "",
+          quantity: 0
         },
         {
           name: "GREEN CRACK (EXOTIC)",
+          id: 9,
           type: "SATIVA",
-          items: ["Gram", "1/8", "1/4", "OZ"],
+          available: ["Gram", "eigth", "quarter", "OZ"],
           price: { gram: 12.95, eigth: 60, quarter: 110, oz: 220 },
           image: "http://textimages.mobi/Img/J9I0QL2NBKH7AL474XPF.jpg",
-          details: ""
+          details: "",
+          quantity: 0
         }
       ],
       Cart: [],
-      // items: ["Gram", "1/8", "1/4", "OZ"],
+      // available: ["Gram", "eigth", "quarter", "OZ"],
       select: ""
     };
   },
@@ -247,7 +283,24 @@ export default {
   methods: {
     Addtocart(Product, select) {
       this.Cart.push(Product);
+      console.log(select);
       console.log(this.Cart);
+    },
+    UpdateCart(Product, UpdateType) {
+      for (let i = 0; i < this.ProductList.length; i++) {
+        if (this.ProductList[i].id === Product.id) {
+          console.log(Product);
+          console.log(UpdateType);
+          if (
+            (UpdateType === "subtract") &
+            (this.ProductList[i].quantity != 0)
+          ) {
+            this.ProductList[i].quantity--;
+          } else {
+            this.ProductList[i].quantity++;
+          }
+        }
+      }
     }
   }
 };
