@@ -1,5 +1,11 @@
 <template>
   <div>
+    <div>
+      <SectionHeader
+        header="Great Selection of quality flower."
+        subHeader="Our Selection"
+      />
+    </div>
     <v-row>
       <v-col
         v-for="Product in ProductList"
@@ -28,9 +34,86 @@
               <div>{{Product.name}}</div>
 
               <div>{{Product.type}}</div>
-              <div>{{Product.price}}</div>
+
               <!-- <h2>{{Product.price.get("gram")}}</h2> -->
             </v-card-text>
+            <div>
+              <v-card
+                class="d-flex mb-6"
+                color="trasparent"
+                flat
+                tile
+              >
+                <v-card
+                  class="align-self-center"
+                  outlined
+                  tile
+                >
+                  <v-list-item two-line>
+                    <v-list-item-content>
+                      <v-list-item-title>
+                        <div>Gram</div>
+                      </v-list-item-title>
+                      <v-list-item-subtitle>
+                        <div>$ {{Product.price["gram"]}}</div>
+                      </v-list-item-subtitle>
+
+                    </v-list-item-content>
+                  </v-list-item>
+                </v-card>
+                <v-card
+                  class="align-self-center"
+                  outlined
+                  tile
+                >
+                  <v-list-item two-line>
+                    <v-list-item-content>
+                      <v-list-item-title>
+                        <div>Eight</div>
+                      </v-list-item-title>
+                      <v-list-item-subtitle>
+                        <div>$ {{Product.price["eigth"]}}</div>
+                      </v-list-item-subtitle>
+
+                    </v-list-item-content>
+                  </v-list-item>
+                </v-card>
+                <v-card
+                  class="align-self-center"
+                  outlined
+                  tile
+                >
+                  <v-list-item two-line>
+                    <v-list-item-content>
+                      <v-list-item-title>
+                        <div>Quarter</div>
+                      </v-list-item-title>
+                      <v-list-item-subtitle>
+                        <div>$ {{Product.price["quarter"]}}</div>
+                      </v-list-item-subtitle>
+
+                    </v-list-item-content>
+                  </v-list-item>
+                </v-card>
+                <v-card
+                  class="align-self-center"
+                  outlined
+                  tile
+                >
+                  <v-list-item two-line>
+                    <v-list-item-content>
+                      <v-list-item-title>
+                        <div>OZ</div>
+                      </v-list-item-title>
+                      <v-list-item-subtitle>
+                        <div>$ {{Product.price["oz"]}}</div>
+                      </v-list-item-subtitle>
+
+                    </v-list-item-content>
+                  </v-list-item>
+                </v-card>
+              </v-card>
+            </div>
 
             <v-card-actions>
 
@@ -38,6 +121,7 @@
                 color="orange"
                 text
                 class="pr-6"
+                @click="Addtocart(Product)"
               >
                 Add to Cart
               </v-btn>
@@ -61,7 +145,11 @@
 
 </template>
 <script>
+import SectionHeader from "~/components/sections/SectionHeader.vue";
 export default {
+  components: {
+    SectionHeader
+  },
   data() {
     return {
       ProductList: [
@@ -138,8 +226,9 @@ export default {
           details: ""
         }
       ],
+      Cart: [],
       // items: ["Gram", "1/8", "1/4", "OZ"],
-      select: null
+      select: ""
     };
   },
   computed: {
@@ -153,6 +242,12 @@ export default {
       } else {
         return null;
       }
+    }
+  },
+  methods: {
+    Addtocart(Product, select) {
+      this.Cart.push(Product);
+      console.log(this.Cart);
     }
   }
 };
