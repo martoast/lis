@@ -41,14 +41,9 @@
       </div> -->
       <div>
         <v-toolbar-items class="pr-12 pt-4">
-          <v-btn
-            color="transparent"
-            text
-          >
-            <v-icon x-large>
-              mdi-cart-outline
-            </v-icon>
-          </v-btn>
+
+          <CheckoutModal />
+
         </v-toolbar-items>
       </div>
     </v-app-bar>
@@ -93,10 +88,12 @@
 // Utilities
 import { mapMutations } from "vuex";
 import VuetifyLogo from "~/components/VuetifyLogo.vue";
+import CheckoutModal from "~/components/sections/CheckoutModal.vue";
 
 export default {
   components: {
-    VuetifyLogo
+    VuetifyLogo,
+    CheckoutModal
   },
   data: () => ({
     isScrolling: false,
