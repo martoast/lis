@@ -83,16 +83,11 @@ export default {
   },
   methods: {
     Remove() {
-      // this.$store.commit('cart/remove', product)
       for (let i = 0; i < this.selected.length; i++) {
-        // console.log(this.selected[i]);
-        for (let j = 0; j < this.cart.length; i++) {
-          if (this.selected[i] === this.cart[j]) {
-            console.log("delete here");
-            console.log(this.selected[i]);
-          }
-        }
+        this.$store.commit("cart/remove", this.selected[i]);
       }
+
+      console.log("remove");
     },
     handleClick(value) {
       console.log(value);
