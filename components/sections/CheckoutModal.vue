@@ -2,6 +2,7 @@
   <v-row justify="center">
     <v-dialog
       v-model="dialog"
+      v-if="cart.length > 0"
       persistent
       max-width="50%"
     >
@@ -11,6 +12,7 @@
           text
           v-on="on"
         >
+          <span>{{cart.length}} X</span>
           <v-icon x-large>
             mdi-cart-outline
           </v-icon>
@@ -43,7 +45,7 @@
             text
             v-if="this.selected.length > 0"
             @click="Remove()"
-          >Delete Item</v-btn>
+          >Delete Items</v-btn>
           <v-btn
             color="green darken-1"
             text

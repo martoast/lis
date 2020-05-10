@@ -8,6 +8,6 @@ export const mutations = {
 
   },
   remove(state, { product }) {
-    state.cart.splice(state.cart.indexOf(product), 1)
+    state.cart.splice(product, 1)
   }
 }
