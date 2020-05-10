@@ -291,22 +291,22 @@ export default {
         price: Product.price[select] * Product.quantity,
         type: Product.type
       };
-      // console.log(Order);
-      // this.Cart.push(Order);
-      if (this.Cart.length > 0) {
-        for (let i = 0; i < this.Cart.length; i++) {
-          if (this.Cart[i].id === Product.id) {
-            // this.Cart.remove(this.Cart[i]);
-            this.Cart.push(Product);
-            console.log(this.Cart);
-          } else {
-            this.Cart.push(Order);
-          }
-        }
-      } else {
-        this.Cart.push(Order);
-        console.log(this.Cart, select);
-      }
+      console.log(Order);
+      this.Cart.push(Order);
+      // if (this.Cart.length > 0) {
+      //   for (let i = 0; i < this.Cart.length; i++) {
+      //     if (this.Cart[i].id === Product.id) {
+      //       // this.Cart.remove(this.Cart[i]);
+      //       this.Cart.push(Product);
+      //       console.log(this.Cart);
+      //     } else {
+      //       this.Cart.push(Order);
+      //     }
+      //   }
+      // } else {
+      //   this.Cart.push(Order);
+      //   console.log(this.Cart, select);
+      // }
     },
     UpdateCart(Product, UpdateType) {
       for (let i = 0; i < this.ProductList.length; i++) {
