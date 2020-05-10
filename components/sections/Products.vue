@@ -41,7 +41,7 @@
               <v-card
                 class="d-flex mb-6"
                 color="trasparent"
-                flat
+                text
                 tile
               >
                 <v-card
@@ -136,10 +136,11 @@
             <v-card-actions>
 
               <v-btn
+                v-if="select"
                 color="orange"
                 text
                 class="pr-6"
-                @click="Addtocart(Product)"
+                @click="Addtocart(Product, select)"
               >
                 Add to Cart
               </v-btn>
@@ -282,9 +283,30 @@ export default {
   },
   methods: {
     Addtocart(Product, select) {
-      this.Cart.push(Product);
-      console.log(select);
-      console.log(this.Cart);
+      var Order = {
+        id: Product.id,
+        select: select,
+        quantity: Product.quantity,
+        name: Product.name,
+        price: Product.price[select] * Product.quantity,
+        type: Product.type
+      };
+      // console.log(Order);
+      // this.Cart.push(Order);
+      if (this.Cart.length > 0) {
+        for (let i = 0; i < this.Cart.length; i++) {
+          if (this.Cart[i].id === Product.id) {
+            // this.Cart.remove(this.Cart[i]);
+            this.Cart.push(Product);
+            console.log(this.Cart);
+          } else {
+            this.Cart.push(Order);
+          }
+        }
+      } else {
+        this.Cart.push(Order);
+        console.log(this.Cart, select);
+      }
     },
     UpdateCart(Product, UpdateType) {
       for (let i = 0; i < this.ProductList.length; i++) {
@@ -299,6 +321,7 @@ export default {
           } else {
             this.ProductList[i].quantity++;
           }
+          break;
         }
       }
     }

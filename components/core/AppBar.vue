@@ -25,7 +25,7 @@
           >mdi-menu</v-icon>
         </v-toolbar-items>
       </div>
-      <div class="hidden-sm-and-down">
+      <!-- <div class="hidden-sm-and-down">
         <v-toolbar-items>
           <v-btn
             v-for="(item, i) in items"
@@ -36,6 +36,18 @@
             dark
           >
             <span v-text="item.text" />
+          </v-btn>
+        </v-toolbar-items>
+      </div> -->
+      <div>
+        <v-toolbar-items class="pr-12 pt-4">
+          <v-btn
+            color="transparent"
+            text
+          >
+            <v-icon x-large>
+              mdi-cart-outline
+            </v-icon>
           </v-btn>
         </v-toolbar-items>
       </div>
