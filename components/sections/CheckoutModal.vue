@@ -3,7 +3,7 @@
     <v-dialog
       v-model="dialog"
       persistent
-      max-width="290"
+      max-width="50%"
     >
       <template v-slot:activator="{ on }">
         <v-btn
@@ -25,18 +25,25 @@
           :items="cart"
           hide-default-header
           hide-default-footer
+          item-key="name"
+          show-select
+          item-selected
+          v-model="selected"
+          class="elevation-1"
         >
 
         </v-data-table>
 
         <v-card-actions>
+          <!-- <p>{{selected}}</p> -->
 
           <v-spacer></v-spacer>
           <v-btn
             color="green darken-1"
             text
-            @click="dialog = false"
-          >Disagree</v-btn>
+            v-if="this.selected.length > 0"
+            @click="Remove()"
+          >Delete Item</v-btn>
           <v-btn
             color="green darken-1"
             text
@@ -52,6 +59,11 @@ export default {
   data() {
     return {
       dialog: false,
+      dialog2: false,
+      selected: [],
+
+      SelectedOrder: ["shit"],
+
       headers: [
         { text: "Item", value: "name" },
 
@@ -65,11 +77,26 @@ export default {
     cart() {
       return this.$store.state.cart.cart;
     }
+    // selected() {
+    //   return this.SelectedOrder;
+    // }
   },
   methods: {
     Remove() {
       // this.$store.commit('cart/remove', product)
-      console.log("want to delete");
+      for (let i = 0; i < this.selected.length; i++) {
+        // console.log(this.selected[i]);
+        for (let j = 0; j < this.cart.length; i++) {
+          if (this.selected[i] === this.cart[j]) {
+            console.log("delete here");
+            console.log(this.selected[i]);
+          }
+        }
+      }
+    },
+    handleClick(value) {
+      console.log(value);
+      console.log("test");
     }
   }
 };
