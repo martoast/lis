@@ -11,18 +11,10 @@
       <v-spacer />
       <div class="hidden-md-and-up">
         <v-toolbar-items>
-          <v-btn
-            to="/contact"
-            dark
-            color="success"
-            class="mr-12"
-          >
+          <v-btn to="/contact" dark color="success" class="mr-12">
             Contact Us
           </v-btn>
-          <v-icon
-            @click.stop="drawer = !drawer"
-            dark
-          >mdi-menu</v-icon>
+          <v-icon @click.stop="drawer = !drawer" dark>mdi-menu</v-icon>
         </v-toolbar-items>
       </div>
       <!-- <div class="hidden-sm-and-down">
@@ -41,9 +33,7 @@
       </div> -->
       <div>
         <v-toolbar-items class="pr-12 pt-4">
-
           <CheckoutModal />
-
         </v-toolbar-items>
       </div>
     </v-app-bar>
@@ -107,11 +97,11 @@ export default {
     title: "Vuetify.js",
     Menuitems: [
       { title: "Home", icon: "mdi-home-city", to: "/" },
-      { title: "Log in", icon: "dashboard", to: "/" },
+      { title: "Log in", icon: "dashboard", to: "/login" },
       {
         title: "Register",
         icon: "dashboard",
-        to: "/"
+        to: "/register"
       }
     ]
   }),
