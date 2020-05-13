@@ -20,8 +20,8 @@ export default {
           sortable: false,
           value: "name"
         },
-        { text: "Calories", value: "calories" },
-        { text: "Fat (g)", value: "fat" },
+        { text: "Price", value: "calories" },
+        { text: "Amount", value: "fat" },
         { text: "Carbs (g)", value: "carbs" },
         { text: "Protein (g)", value: "protein" },
         { text: "Iron (%)", value: "iron" }
@@ -116,26 +116,23 @@ export default {
     vm.$fireAuth.onAuthStateChanged(async function(user) {
       if (user) {
         try {
-          // const messageRef = vm.$fireStore.collection("users").doc(user.email);
-          // await messageRef
-          //   .get()
-          //   .then(function(doc) {
-          //     if (doc.exists) {
-          //       console.log(doc.data().menu);
-          //       let FullMenu = doc.data().menu;
-          //       vm.$store.commit("menu/setMenu", FullMenu);
-          //     } else {
-          //       // doc.data() will be undefined in this case
-          //       console.log("No menu has been created!");
-          //     }
-          //   })
-          //   .catch(function(error) {
-          //     console.log("Error getting document:", error);
-          //   });
           if (user.email === "test456@gmail.com") {
             console.log("success");
             console.log(user);
             vm.flag = true;
+            const messageRef = vm.$fireStore.collection("products");
+
+            await messageRef
+              .get()
+              .then(function(querySnapshot) {
+                querySnapshot.forEach(function(doc) {
+                  // doc.data() is never undefined for query doc snapshots
+                  console.log(doc.id, " => ", doc.data());
+                });
+              })
+              .catch(function(error) {
+                console.log("Error getting document:", error);
+              });
           } else {
             alert("Not Loggged in as Administrator");
             console.log(user);
