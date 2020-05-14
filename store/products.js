@@ -11,3 +11,11 @@ export const mutations = {
     state.products.splice(product, 1)
   }
 }
+
+export const getters = {
+  getProducts(state) {
+    return state.products
+
+  }
+
+}

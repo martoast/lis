@@ -1,5 +1,12 @@
 <template>
   <v-card>
+    <!-- <div class="pa-12 d-flex flex-row-reverse">
+      <v-btn @click="AddProduct()"> Add Product</v-btn>
+    </div> -->
+    <div class="pa-12 d-flex flex-row-reverse">
+      <AddProductModal />
+    </div>
+
     <v-card-title>
       <v-spacer></v-spacer>
       <v-text-field
@@ -22,10 +29,14 @@
   </v-card>
 </template>
 <script>
+import AddProductModal from "~/components/sections/AddProductModal.vue";
 export default {
+  components: {
+    AddProductModal
+  },
   data() {
     return {
-      products: [],
+      // products: [],
       search: "",
       flag: false,
       headers: [
@@ -35,6 +46,7 @@ export default {
           sortable: false,
           value: "name"
         },
+        { text: "type", value: "type" },
 
         { text: "quantity", value: "quantity" },
         { text: "gram (g)", value: "gram" },
@@ -43,6 +55,11 @@ export default {
         { text: "oz (24g)", value: "oz" }
       ]
     };
+  },
+  computed: {
+    products() {
+      return this.$store.getters["products/getProducts"];
+    }
   },
   created() {
     const vm = this;
@@ -63,23 +80,10 @@ export default {
                   // doc.data() is never undefined for query doc snapshots
                   console.log(doc.id, " => ", doc.data());
 
-                  var PriceList = doc.data().price;
-                  // for (var key in PriceList) {
-                  //   console.log(key, PriceList[key]);
+                  vm.$store.commit("products/add", doc.data());
 
-                  //   let headerthing = { text: key, value: key };
-
-                  //   let productsthing = { text: key, value: PriceList[key] };
-
-                  //   vm.headers.push(headerthing);
-
-                  // vm.products.push(productsthing);
-
-                  // let thing = {text: PriceList[i], value: }
-                  // }
-
-                  vm.products.push(doc.data());
-                  console.log(vm.products);
+                  // vm.products.push(doc.data());
+                  // console.log(vm.products);
                 });
               })
               .catch(function(error) {
@@ -100,6 +104,7 @@ export default {
         alert("must log in to access Register");
       }
     });
-  }
+  },
+  methods: {}
 };
 </script>
