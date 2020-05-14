@@ -128,20 +128,23 @@ export default {
   },
   methods: {
     async AddProduct() {
+      let product = {
+        name: this.name,
+        type: this.type,
+        details: this.details,
+        gram: parseInt(this.gram),
+        eight: parseInt(this.eight),
+        quarter: parseInt(this.quarter),
+        oz: parseInt(this.oz),
+        image: this.image,
+        available: this.available,
+        quantity: parseInt(this.quantity)
+      };
+
       const messageRef = this.$fireStore.collection("products");
       try {
-        await messageRef.add({
-          name: this.name,
-          type: this.type,
-          details: this.details,
-          gram: parseInt(this.gram),
-          eight: parseInt(this.eight),
-          quarter: parseInt(this.quarter),
-          oz: parseInt(this.oz),
-          image: this.image,
-          available: this.available,
-          quantity: parseInt(this.quantity)
-        });
+        this.$store.commit("products/add", product);
+        await messageRef.add(product);
       } catch (e) {
         alert(e);
         return;
