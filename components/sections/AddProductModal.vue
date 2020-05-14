@@ -158,6 +158,7 @@ export default {
       this.image = "";
       this.quantity = null;
       this.available = [];
+      $nuxt._router.push("/console");
     }
   }
 };

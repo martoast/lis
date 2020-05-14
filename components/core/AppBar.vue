@@ -9,7 +9,7 @@
       <VuetifyLogo />
 
       <v-spacer />
-      <div class="hidden-md-and-up">
+      <div>
         <v-toolbar-items>
           <v-btn to="/contact" dark color="success" class="mr-12">
             Contact Us
@@ -69,6 +69,11 @@
             </v-list-item-content>
           </v-list-item>
         </v-list>
+        <template v-slot:append>
+          <div class="pa-2">
+            <v-btn block @click="logout()">Logout</v-btn>
+          </div>
+        </template>
       </v-navigation-drawer>
     </div>
   </div>
@@ -133,6 +138,16 @@ export default {
     onScroll() {
       this.isScrolling =
         (window.pageYOffset || document.documentElement.scrollTop || 0) > 25;
+    },
+    logout() {
+      this.$fireAuth.signOut().then(
+        function() {
+          console.log("Signed Out");
+        },
+        function(error) {
+          console.error("Sign Out Error", error);
+        }
+      );
     }
   }
 };

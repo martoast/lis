@@ -1,32 +1,41 @@
 <template>
-  <v-card>
-    <!-- <div class="pa-12 d-flex flex-row-reverse">
+  <div>
+    <div v-if="flag === false">
+      <v-row justify="center" align="center">
+        <v-card>
+          <v-card-title>must be logged in as Administrator</v-card-title>
+        </v-card>
+      </v-row>
+    </div>
+    <v-card v-if="flag != false">
+      <!-- <div class="pa-12 d-flex flex-row-reverse">
       <v-btn @click="AddProduct()"> Add Product</v-btn>
     </div> -->
-    <div class="pa-12 d-flex flex-row-reverse">
-      <AddProductModal />
-    </div>
 
-    <v-card-title>
-      <v-spacer></v-spacer>
-      <v-text-field
-        v-model="search"
-        append-icon="mdi-magnify"
-        label="Search"
-        single-line
-        hide-details
-      ></v-text-field>
-    </v-card-title>
-    <div v-if="flag === true">
-      <v-data-table
-        :headers="headers"
-        :items="products"
-        :items-per-page="5"
-        :search="search"
-        class="elevation-1"
-      ></v-data-table>
-    </div>
-  </v-card>
+      <v-card-title>
+        <div class="pa-4 d-flex flex-row-reverse">
+          <AddProductModal />
+        </div>
+        <v-spacer></v-spacer>
+        <v-text-field
+          v-model="search"
+          append-icon="mdi-magnify"
+          label="Search"
+          single-line
+          hide-details
+        ></v-text-field>
+      </v-card-title>
+      <div v-if="flag === true" class="pt-2">
+        <v-data-table
+          :headers="headers"
+          :items="products"
+          :items-per-page="5"
+          :search="search"
+          class="elevation-1"
+        ></v-data-table>
+      </div>
+    </v-card>
+  </div>
 </template>
 <script>
 import AddProductModal from "~/components/sections/AddProductModal.vue";
@@ -101,7 +110,6 @@ export default {
       } else {
         // No user is signed in.
         console.log("No User logged in");
-        alert("must log in to access Register");
       }
     });
   },
