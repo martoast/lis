@@ -1,5 +1,6 @@
 export const state = () => ({
-  products: []
+  products: [],
+
 })
 
 export const mutations = {
@@ -7,9 +8,16 @@ export const mutations = {
     state.products.push(product)
 
   },
-  remove(state, { product }) {
-    state.products.splice(product, 1)
-  }
+  remove(state, product) {
+    var products = state.products
+    products.splice(products.indexOf(product), 1)
+  },
+  EDIT_PRODUCT(state, product, productIndex) {
+    var products = state.products
+    products.splice(products[productIndex], 1, product)
+    // products.push(product)
+  },
+
 }
 
 export const getters = {

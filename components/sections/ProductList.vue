@@ -32,8 +32,77 @@
           :items-per-page="5"
           :search="search"
           class="elevation-1"
-        ></v-data-table>
+        >
+          <template v-slot:item.actions="{ item }">
+            <v-icon small class="mr-2" @click="editItem(item)">
+              mdi-pencil
+            </v-icon>
+            <v-icon small @click="deleteItem(item)">
+              mdi-delete
+            </v-icon>
+          </template>
+        </v-data-table>
       </div>
+      <v-dialog v-model="dialog" max-width="500px">
+        <v-card>
+          <v-card-title>
+            <span class="headline">Edit Product</span>
+          </v-card-title>
+
+          <v-card-text>
+            <v-container>
+              <v-row>
+                <v-col cols="12" sm="6" md="4">
+                  <v-text-field
+                    v-model="editedItem.name"
+                    label="name"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" sm="6" md="4">
+                  <v-text-field
+                    v-model="editedItem.type"
+                    label="type"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" sm="6" md="4">
+                  <v-text-field
+                    v-model="editedItem.quantity"
+                    label="gram (g)"
+                    type="number"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" sm="6" md="4">
+                  <v-text-field
+                    v-model="editedItem.gram"
+                    label="gram (g)"
+                    type="number"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" sm="6" md="4">
+                  <v-text-field
+                    v-model="editedItem.eight"
+                    label="eight"
+                    type="number"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" sm="6" md="4">
+                  <v-text-field
+                    v-model="editedItem.quarter"
+                    label="quarter"
+                    type="number"
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-card-text>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
+            <v-btn color="blue darken-1" text @click="save">Save</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </v-card>
   </div>
 </template>
@@ -45,8 +114,32 @@ export default {
   },
   data() {
     return {
-      // products: [],
+      dialog: false,
       search: "",
+      editedIndex: -1,
+      editedItem: {
+        name: "",
+        type: "",
+        quantity: 0,
+        gram: 0,
+        eight: 0,
+        quarter: 0,
+        oz: 0,
+        available: [],
+        image: ""
+      },
+      defaultItem: {
+        name: "",
+        type: "",
+        quantity: 0,
+        gram: 0,
+        eight: 0,
+        quarter: 0,
+        oz: 0,
+        available: [],
+        image: ""
+      },
+
       flag: false,
       headers: [
         {
@@ -61,13 +154,16 @@ export default {
         { text: "gram (g)", value: "gram" },
         { text: "eight (1/8)", value: "eight" },
         { text: "quarter (1/4)", value: "quarter" },
-        { text: "oz (24g)", value: "oz" }
+        { text: "oz (24g)", value: "oz" },
+        { text: "Actions", value: "actions", sortable: false }
       ]
     };
   },
   computed: {
-    products() {
-      return this.$store.getters["products/getProducts"];
+    products: {
+      get() {
+        return this.$store.getters["products/getProducts"];
+      }
     }
   },
   created() {
@@ -113,6 +209,44 @@ export default {
       }
     });
   },
-  methods: {}
+  methods: {
+    editItem(item) {
+      this.editedIndex = this.products.indexOf(item);
+      console.log(item, this.editedIndex);
+
+      this.editedItem = Object.assign({}, item);
+      this.dialog = true;
+    },
+
+    deleteItem(item) {
+      const index = this.products.indexOf(item);
+      confirm("Are you sure you want to delete this item?") &&
+        this.$store.commit("products/remove", item);
+    },
+
+    close() {
+      this.dialog = false;
+      // this.$nextTick(() => {
+      //   this.editedItem = Object.assign({}, this.defaultItem);
+      //   this.editedIndex = -1;
+      // });
+    },
+
+    save() {
+      // if (this.editedIndex > -1) {
+      //   Object.assign(this.products[this.editedIndex], this.editedItem);
+      // } else {
+      //   this.$store.commit("products/EDIT_PRODUCT", this.editedItem);
+      // }
+
+      this.$store.commit(
+        "products/EDIT_PRODUCT",
+        this.editedItem,
+        this.editedIndex
+      );
+      console.log(this.editedItem, this.editedIndex);
+      this.close();
+    }
+  }
 };
 </script>

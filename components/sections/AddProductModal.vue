@@ -25,6 +25,7 @@
                   :items="['Sativa', 'Hybrid', 'Indica']"
                   label="Type"
                   v-model="type"
+                  type="text"
                 ></v-autocomplete>
               </v-col>
               <v-col cols="12" sm="6">
