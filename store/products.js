@@ -12,10 +12,11 @@ export const mutations = {
     var products = state.products
     products.splice(products.indexOf(product), 1)
   },
-  EDIT_PRODUCT(state, product, productIndex) {
+  EDIT_PRODUCT(state, payload) {
     var products = state.products
-    products.splice(products[productIndex], 1, product)
-    // products.push(product)
+
+    products.splice(payload.key1, 1, payload.key2)
+
   },
 
 }

@@ -226,25 +226,13 @@ export default {
 
     close() {
       this.dialog = false;
-      // this.$nextTick(() => {
-      //   this.editedItem = Object.assign({}, this.defaultItem);
-      //   this.editedIndex = -1;
-      // });
     },
 
     save() {
-      // if (this.editedIndex > -1) {
-      //   Object.assign(this.products[this.editedIndex], this.editedItem);
-      // } else {
-      //   this.$store.commit("products/EDIT_PRODUCT", this.editedItem);
-      // }
+      let payload = { key1: this.editedIndex, key2: this.editedItem };
 
-      this.$store.commit(
-        "products/EDIT_PRODUCT",
-        this.editedItem,
-        this.editedIndex
-      );
-      console.log(this.editedItem, this.editedIndex);
+      this.$store.commit("products/EDIT_PRODUCT", payload);
+      console.log(this.editedItem);
       this.close();
     }
   }
