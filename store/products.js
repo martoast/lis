@@ -23,16 +23,22 @@ export const mutations = {
     }
     alert("Success.");
   },
-  EDIT_PRODUCT(state, payload) {
+  async EDIT_PRODUCT(state, payload) {
     var products = state.products
+
+    console.log(payload.key3.name)
 
     products.splice(payload.key1, 1, payload.key2)
     const messageRef = this.$fireStore
       .collection("products")
-      .doc(payoad.key2);
+      .doc(payload.key3.name);
+    const messageRef2 = this.$fireStore
+      .collection("products")
+      .doc(payload.key2.name);
     try {
+      await messageRef.delete();
 
-      await messageRef.update(payload.key2);
+      await messageRef2.set(payload.key2);
     } catch (e) {
       alert(e);
       return;

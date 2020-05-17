@@ -215,6 +215,7 @@ export default {
       console.log(item, this.editedIndex);
 
       this.editedItem = Object.assign({}, item);
+      this.defaultItem = Object.assign({}, item);
       this.dialog = true;
     },
 
@@ -229,7 +230,11 @@ export default {
     },
 
     save() {
-      let payload = { key1: this.editedIndex, key2: this.editedItem };
+      let payload = {
+        key1: this.editedIndex,
+        key2: this.editedItem,
+        key3: this.defaultItem
+      };
 
       this.$store.commit("products/EDIT_PRODUCT", payload);
       console.log(this.editedItem);
