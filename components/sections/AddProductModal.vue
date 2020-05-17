@@ -142,10 +142,12 @@ export default {
         quantity: parseInt(this.quantity)
       };
 
-      const messageRef = this.$fireStore.collection("products");
+      const messageRef = this.$fireStore
+        .collection("products")
+        .doc(product.name);
       try {
         this.$store.commit("products/add", product);
-        await messageRef.add(product);
+        await messageRef.set(product);
       } catch (e) {
         alert(e);
         return;
