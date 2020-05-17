@@ -3,11 +3,37 @@ export const state = () => ({
 
 })
 
+export const actions = {
+  async fetchProducts({ commit }) {
+    console.log("test")
+    const messageRef = this.$fireStore.collection("products");
+
+    await messageRef
+      .get()
+      .then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          // doc.data() is never undefined for query doc snapshots
+          console.log(doc.id, " => ", doc.data());
+
+          commit("add", doc.data());
+
+
+        });
+      })
+      .catch(function (error) {
+        console.log("Error getting document:", error);
+      });
+  },
+
+
+}
+
 export const mutations = {
   add(state, product) {
     state.products.push(product)
 
   },
+
   async remove(state, product) {
     var products = state.products
     products.splice(products.indexOf(product), 1)
@@ -51,7 +77,13 @@ export const mutations = {
 
 export const getters = {
   getProducts(state) {
+
+
+
     return state.products
+
+
+
 
   }
 

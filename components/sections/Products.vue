@@ -13,102 +13,69 @@
         cols="12"
         md="4"
       >
-        <v-hover
-          v-slot:default="{ hover }"
-          open-delay="200"
-        >
-          <v-card
-            :elevation="hover ? 16 : 2"
-            class="mx-auto"
-            max-width="400"
-          >
+        <v-hover v-slot:default="{ hover }" open-delay="200">
+          <v-card :elevation="hover ? 16 : 2" class="mx-auto" max-width="400">
             <v-img
               class="white--text align-end"
               height="200px"
               :src="Product.image"
             >
-
             </v-img>
 
             <v-card-text class="text--primary">
-              <div>{{Product.name}}</div>
+              <div>{{ Product.name }}</div>
 
-              <div>{{Product.type}}</div>
+              <div>{{ Product.type }}</div>
 
               <!-- <h2>{{Product.price.get("gram")}}</h2> -->
             </v-card-text>
             <div>
-              <v-card
-                class="d-flex mb-6"
-                color="trasparent"
-                text
-                tile
-              >
-                <v-card
-                  class="align-self-center"
-                  outlined
-                  tile
-                >
+              <v-card class="d-flex mb-6" color="trasparent" text tile>
+                <v-card class="align-self-center" outlined tile>
                   <v-list-item two-line>
                     <v-list-item-content>
                       <v-list-item-title>
                         <div>gram</div>
                       </v-list-item-title>
                       <v-list-item-subtitle>
-                        <div>$ {{Product.price["gram"]}}</div>
+                        <div>$ {{ Product.gram }}</div>
                       </v-list-item-subtitle>
-
                     </v-list-item-content>
                   </v-list-item>
                 </v-card>
-                <v-card
-                  class="align-self-center"
-                  outlined
-                  tile
-                >
+                <v-card class="align-self-center" outlined tile>
                   <v-list-item two-line>
                     <v-list-item-content>
                       <v-list-item-title>
                         <div>Eight</div>
                       </v-list-item-title>
                       <v-list-item-subtitle>
-                        <div>$ {{Product.price["eigth"]}}</div>
+                        <div>$ {{ Product.eight }}</div>
                       </v-list-item-subtitle>
-
                     </v-list-item-content>
                   </v-list-item>
                 </v-card>
-                <v-card
-                  class="align-self-center"
-                  outlined
-                  tile
-                >
+                <v-card class="align-self-center" outlined tile>
                   <v-list-item two-line>
                     <v-list-item-content>
                       <v-list-item-title>
                         <div>Quarter</div>
                       </v-list-item-title>
                       <v-list-item-subtitle>
-                        <div>$ {{Product.price["quarter"]}}</div>
+                        <div>$ {{ Product.quarter }}</div>
                       </v-list-item-subtitle>
-
                     </v-list-item-content>
                   </v-list-item>
                 </v-card>
-                <v-card
-                  class="align-self-center"
-                  outlined
-                  tile
-                >
+                <v-card class="align-self-center" outlined tile>
                   <v-list-item two-line>
                     <v-list-item-content>
                       <v-list-item-title>
                         <div>oz</div>
                       </v-list-item-title>
                       <v-list-item-subtitle>
-                        <div>$ {{Product.price["oz"]}}</div>
+                        <div>$ {{ Product.oz }}</div>
                       </v-list-item-subtitle>
-
                     </v-list-item-content>
                   </v-list-item>
                 </v-card>
@@ -117,24 +84,20 @@
 
             <div v-if="select">
               <v-row justify="center">
-                <v-btn @click="UpdateCart(Product, UpdateType='subtract')">
+                <v-btn @click="UpdateCart(Product, (UpdateType = 'subtract'))">
                   -
                 </v-btn>
                 <!-- <span class="pa-6">{{Product.quantity}}</span> -->
                 <h2 class="pl-6 pr-6">
-                  {{Product.quantity}}
-
+                  {{ Product.quantity }}
                 </h2>
-                <v-btn @click="UpdateCart(Product, UpdateType='add')">
+                <v-btn @click="UpdateCart(Product, (UpdateType = 'add'))">
                   +
                 </v-btn>
-
               </v-row>
-
             </div>
 
             <v-card-actions>
-
               <v-btn
                 v-if="select"
                 color="orange"
@@ -152,16 +115,12 @@
                 label="select amount*"
                 required
               ></v-select>
-
             </v-card-actions>
           </v-card>
         </v-hover>
-
       </v-col>
     </v-row>
-
   </div>
-
 </template>
 <script>
 import SectionHeader from "~/components/sections/SectionHeader.vue";
@@ -169,100 +128,11 @@ export default {
   components: {
     SectionHeader
   },
+  async fetch() {
+    await this.$store.dispatch("products/fetchProducts");
+  },
   data() {
     return {
-      ProductList: [
-        {
-          name: "GIRL SCOUT COOKIES (EXOTIC)",
-          id: 1,
-          type: "HYBRID",
-          available: ["gram", "eigth", "quarter", "oz"],
-          price: { gram: 12.95, eigth: 60, quarter: 110, oz: 666 },
-          image: "http://textimages.mobi/Img/J9I0QL2NBKH7AL474XPF.jpg",
-          details: "",
-          quantity: 0
-        },
-        {
-          name: "TANGIE DREAM (EXOTIC)",
-          id: 2,
-          type: "SATIVA",
-          available: ["gram", "eigth", "quarter", "oz"],
-          price: { gram: 2.95, eigth: 60, quarter: 110, oz: 420 },
-          image: "http://textimages.mobi/Img/J9I0QL2NBKH7AL474XPF.jpg",
-          details: "",
-          quantity: 0
-        },
-        {
-          name: "DUTCH TREAT (EXOTIC)",
-          id: 3,
-          type: "HYBRID",
-          available: ["gram", "eigth", "quarter", "oz"],
-          price: { gram: 12.95, eigth: 60, quarter: 110, oz: 220 },
-          image: "http://textimages.mobi/Img/J9I0QL2NBKH7AL474XPF.jpg",
-          details: "",
-          quantity: 0
-        },
-        {
-          name: "ROLLEX OG KUSH (EXOTIC)",
-          id: 4,
-          type: "INDICA",
-          available: ["gram", "eigth", "quarter", "oz"],
-          price: { gram: 300, eigth: 60, quarter: 110, oz: 220 },
-          image: "http://textimages.mobi/Img/J9I0QL2NBKH7AL474XPF.jpg",
-          details: "",
-          quantity: 0
-        },
-        {
-          name: "SENSI STAR (EXOTIC)",
-          id: 5,
-          type: "INDICA",
-          available: ["gram", "eigth", "quarter", "oz"],
-          price: { gram: 12.95, eigth: 60, quarter: 110, oz: 220 },
-          image: "http://textimages.mobi/Img/J9I0QL2NBKH7AL474XPF.jpg",
-          details: "",
-          quantity: 0
-        },
-        {
-          name: "UK CHEESE (EXOTIC)",
-          id: 6,
-          type: "HYBRID",
-          available: ["gram", "eigth", "quarter", "oz"],
-          price: { gram: 12.95, eigth: 60, quarter: 110, oz: 220 },
-          image: "http://textimages.mobi/Img/J9I0QL2NBKH7AL474XPF.jpg",
-          details: "",
-          quantity: 0
-        },
-        {
-          name: "GREEN QUEEN (EXOTIC)",
-          id: 7,
-          type: "SATIVA",
-          available: ["gram", "eigth", "quarter", "oz"],
-          price: { gram: 12.95, eigth: 60, quarter: 110, oz: 220 },
-          image: "http://textimages.mobi/Img/J9I0QL2NBKH7AL474XPF.jpg",
-          details: "",
-          quantity: 0
-        },
-        {
-          name: "CLEMENTINE (EXOTIC)",
-          id: 8,
-          type: "SATIVA",
-          available: ["gram", "eigth", "quarter", "oz"],
-          price: { gram: 12.95, eigth: 60, quarter: 110, oz: 220 },
-          image: "http://textimages.mobi/Img/J9I0QL2NBKH7AL474XPF.jpg",
-          details: "",
-          quantity: 0
-        },
-        {
-          name: "GREEN CRACK (EXOTIC)",
-          id: 9,
-          type: "SATIVA",
-          available: ["gram", "eigth", "quarter", "oz"],
-          price: { gram: 12.95, eigth: 60, quarter: 110, oz: 220 },
-          image: "http://textimages.mobi/Img/J9I0QL2NBKH7AL474XPF.jpg",
-          details: "",
-          quantity: 0
-        }
-      ],
       Cart: [],
       // available: ["gram", "eigth", "quarter", "oz"],
       select: ""
@@ -279,8 +149,12 @@ export default {
       } else {
         return null;
       }
+    },
+    ProductList() {
+      return this.$store.getters["products/getProducts"];
     }
   },
+
   methods: {
     Addtocart(Product, select) {
       var Order = {
