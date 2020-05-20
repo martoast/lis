@@ -1,7 +1,10 @@
 <template>
   <div>
     <div v-if="flag === false">
-      <v-row justify="center" align="center">
+      <v-row
+        justify="center"
+        align="center"
+      >
         <v-card>
           <v-card-title>must be logged in as Administrator</v-card-title>
         </v-card>
@@ -25,7 +28,10 @@
           hide-details
         ></v-text-field>
       </v-card-title>
-      <div v-if="flag === true" class="pt-2">
+      <div
+        v-if="flag === true"
+        class="pt-2"
+      >
         <v-data-table
           :headers="headers"
           :items="products"
@@ -34,16 +40,26 @@
           class="elevation-1"
         >
           <template v-slot:item.actions="{ item }">
-            <v-icon small class="mr-2" @click="editItem(item)">
+            <v-icon
+              small
+              class="mr-2"
+              @click="editItem(item)"
+            >
               mdi-pencil
             </v-icon>
-            <v-icon small @click="deleteItem(item)">
+            <v-icon
+              small
+              @click="deleteItem(item)"
+            >
               mdi-delete
             </v-icon>
           </template>
         </v-data-table>
       </div>
-      <v-dialog v-model="dialog" max-width="500px">
+      <v-dialog
+        v-model="dialog"
+        max-width="500px"
+      >
         <v-card>
           <v-card-title>
             <span class="headline">Edit Product</span>
@@ -52,43 +68,79 @@
           <v-card-text>
             <v-container>
               <v-row>
-                <v-col cols="12" sm="6" md="4">
+                <v-col
+                  cols="12"
+                  sm="6"
+                  md="4"
+                >
                   <v-text-field
                     v-model="editedItem.name"
                     label="name"
                   ></v-text-field>
                 </v-col>
-                <v-col cols="12" sm="6" md="4">
+                <v-col
+                  cols="12"
+                  sm="6"
+                  md="4"
+                >
                   <v-text-field
                     v-model="editedItem.type"
                     label="type"
                   ></v-text-field>
                 </v-col>
-                <v-col cols="12" sm="6" md="4">
+                <v-col
+                  cols="12"
+                  sm="6"
+                  md="4"
+                >
                   <v-text-field
                     v-model="editedItem.quantity"
-                    label="gram (g)"
+                    label="quantity"
                     type="number"
                   ></v-text-field>
                 </v-col>
-                <v-col cols="12" sm="6" md="4">
+
+                <v-col
+                  cols="12"
+                  sm="6"
+                  md="4"
+                >
                   <v-text-field
                     v-model="editedItem.gram"
                     label="gram (g)"
                     type="number"
                   ></v-text-field>
                 </v-col>
-                <v-col cols="12" sm="6" md="4">
+                <v-col
+                  cols="12"
+                  sm="6"
+                  md="4"
+                >
                   <v-text-field
                     v-model="editedItem.eight"
                     label="eight"
                     type="number"
                   ></v-text-field>
                 </v-col>
-                <v-col cols="12" sm="6" md="4">
+                <v-col
+                  cols="12"
+                  sm="6"
+                  md="4"
+                >
                   <v-text-field
                     v-model="editedItem.quarter"
                     label="quarter"
+                    type="number"
+                  ></v-text-field>
+                </v-col>
+                <v-col
+                  cols="12"
+                  sm="6"
+                  md="4"
+                >
+                  <v-text-field
+                    v-model="editedItem.oz"
+                    label="OZ"
                     type="number"
                   ></v-text-field>
                 </v-col>
@@ -98,8 +150,16 @@
 
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
-            <v-btn color="blue darken-1" text @click="save">Save</v-btn>
+            <v-btn
+              color="blue darken-1"
+              text
+              @click="close"
+            >Cancel</v-btn>
+            <v-btn
+              color="blue darken-1"
+              text
+              @click="save"
+            >Save</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>

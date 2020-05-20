@@ -25,7 +25,7 @@
       </v-list>
     </v-navigation-drawer> -->
     <AppBar />
-    <Hero />
+    <!-- <Hero /> -->
     <v-content>
       <v-container>
         <nuxt />
