@@ -39,6 +39,8 @@
         <v-card-actions>
           <!-- <p>{{selected}}</p> -->
 
+          <h2>{{Total}}</h2>
+
           <v-spacer></v-spacer>
           <v-btn
             color="green darken-1"
@@ -76,6 +78,15 @@ export default {
   computed: {
     cart() {
       return this.$store.state.cart.cart;
+    },
+    Total() {
+      var totalCart = 0;
+      for (var item in this.cart) {
+        let Selected = this.cart[item].select;
+        let price = this.cart[item].product[Selected];
+        totalCart += price * this.cart[item].quantity;
+      }
+      return Number(totalCart.toFixed(2));
     }
   },
   methods: {
