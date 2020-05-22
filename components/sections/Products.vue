@@ -13,8 +13,15 @@
         cols="12"
         md="4"
       >
-        <v-hover v-slot:default="{ hover }" open-delay="200">
-          <v-card :elevation="hover ? 16 : 2" class="mx-auto" max-width="400">
+        <v-hover
+          v-slot:default="{ hover }"
+          open-delay="200"
+        >
+          <v-card
+            :elevation="hover ? 16 : 2"
+            class="mx-auto"
+            max-width="400"
+          >
             <v-img
               class="white--text align-end"
               height="200px"
@@ -30,8 +37,17 @@
               <!-- <h2>{{Product.price.get("gram")}}</h2> -->
             </v-card-text>
             <div>
-              <v-card class="d-flex mb-6" color="trasparent" text tile>
-                <v-card class="align-self-center" outlined tile>
+              <v-card
+                class="d-flex mb-6"
+                color="trasparent"
+                text
+                tile
+              >
+                <v-card
+                  class="align-self-center"
+                  outlined
+                  tile
+                >
                   <v-list-item two-line>
                     <v-list-item-content>
                       <v-list-item-title>
@@ -43,7 +59,11 @@
                     </v-list-item-content>
                   </v-list-item>
                 </v-card>
-                <v-card class="align-self-center" outlined tile>
+                <v-card
+                  class="align-self-center"
+                  outlined
+                  tile
+                >
                   <v-list-item two-line>
                     <v-list-item-content>
                       <v-list-item-title>
@@ -55,7 +75,11 @@
                     </v-list-item-content>
                   </v-list-item>
                 </v-card>
-                <v-card class="align-self-center" outlined tile>
+                <v-card
+                  class="align-self-center"
+                  outlined
+                  tile
+                >
                   <v-list-item two-line>
                     <v-list-item-content>
                       <v-list-item-title>
@@ -67,7 +91,11 @@
                     </v-list-item-content>
                   </v-list-item>
                 </v-card>
-                <v-card class="align-self-center" outlined tile>
+                <v-card
+                  class="align-self-center"
+                  outlined
+                  tile
+                >
                   <v-list-item two-line>
                     <v-list-item-content>
                       <v-list-item-title>
@@ -84,14 +112,14 @@
 
             <div v-if="select">
               <v-row justify="center">
-                <v-btn @click="UpdateCart(Product, (UpdateType = 'subtract'))">
+                <v-btn @click="UpdateCart((UpdateType = 'subtract'))">
                   -
                 </v-btn>
                 <!-- <span class="pa-6">{{Product.quantity}}</span> -->
                 <h2 class="pl-6 pr-6">
-                  {{ Product.quantity }}
+                  {{Quantity}}
                 </h2>
-                <v-btn @click="UpdateCart(Product, (UpdateType = 'add'))">
+                <v-btn @click="UpdateCart((UpdateType = 'add'))">
                   +
                 </v-btn>
               </v-row>
@@ -103,7 +131,7 @@
                 color="orange"
                 text
                 class="pr-6"
-                @click="Addtocart(Product, select)"
+                @click="Addtocart(Product, select, Quantity)"
               >
                 Add to Cart
               </v-btn>
@@ -133,73 +161,37 @@ export default {
   },
   data() {
     return {
-      Cart: [],
       // available: ["gram", "eigth", "quarter", "oz"],
-      select: ""
+      select: "",
+      Quantity: 0
     };
   },
   computed: {
     // a computed getter
-    FilteredPrice: function() {
-      // `this` points to the vm instance
 
-      if (this.select != null) {
-        // price = this.ProductList[0];
-        return this.ProductList[0].price;
-      } else {
-        return null;
-      }
-    },
     ProductList() {
       return this.$store.getters["products/getProducts"];
     }
   },
 
   methods: {
-    Addtocart(Product, select) {
-      var Order = {
-        id: Product.id,
-        select: select,
-        quantity: Product.quantity,
-        name: Product.name,
-        price: Product.price[select] * Product.quantity,
-        type: Product.type
-      };
+    Addtocart(Product, select, Quantity) {
+      let item = { product: Product, select: select, quantity: Quantity };
+      console.log(item);
 
-      this.$store.commit("cart/add", Order);
+      this.$store.commit("cart/add", item);
 
-      this.Cart.push(Order);
-      console.log(this.Cart);
-      // if (this.Cart.length > 0) {
-      //   for (let i = 0; i < this.Cart.length; i++) {
-      //     if (this.Cart[i].id === Product.id) {
-      //       // this.Cart.remove(this.Cart[i]);
-      //       this.Cart.push(Product);
-      //       console.log(this.Cart);
-      //     } else {
-      //       this.Cart.push(Order);
-      //     }
-      //   }
-      // } else {
-      //   this.Cart.push(Order);
-      //   console.log(this.Cart, select);
-      // }
+      // console.log(select);
+      // console.log(Quantity);
     },
-    UpdateCart(Product, UpdateType) {
-      for (let i = 0; i < this.ProductList.length; i++) {
-        if (this.ProductList[i].id === Product.id) {
-          console.log(Product);
-          console.log(UpdateType);
-          if (
-            (UpdateType === "subtract") &
-            (this.ProductList[i].quantity != 0)
-          ) {
-            this.ProductList[i].quantity--;
-          } else {
-            this.ProductList[i].quantity++;
-          }
-          break;
-        }
+    UpdateCart(UpdateType) {
+      if ((UpdateType === "subtract") & (this.Quantity != 0)) {
+        // this.ProductList[i].quantity--;
+        console.log("call mutation to subtract");
+        this.Quantity -= 1;
+      } else {
+        console.log("call mutation to add");
+        this.Quantity += 1;
       }
     }
   }

@@ -64,14 +64,12 @@ export default {
       dialog2: false,
       selected: [],
 
-      SelectedOrder: ["shit"],
-
       headers: [
-        { text: "Item", value: "name" },
+        { text: "Item", value: "product.name" },
+        { text: "Type", value: "product.type" },
 
         { text: "select", value: "select" },
-        { text: "Amount", value: "quantity" },
-        { text: "Price", value: "price" }
+        { text: "Amount", value: "quantity" }
       ]
     };
   },
@@ -79,9 +77,6 @@ export default {
     cart() {
       return this.$store.state.cart.cart;
     }
-    // selected() {
-    //   return this.SelectedOrder;
-    // }
   },
   methods: {
     Remove() {
