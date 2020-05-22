@@ -3,8 +3,7 @@
     <v-dialog
       v-model="dialog"
       v-if="cart.length > 0"
-      persistent
-      max-width="50%"
+      max-width="70%"
     >
       <template v-slot:activator="{ on }">
         <v-btn
@@ -28,16 +27,21 @@
           hide-default-header
           hide-default-footer
           item-key="name"
-          show-select
-          item-selected
-          v-model="selected"
           class="elevation-1"
         >
+          <template v-slot:item.actions="{ item }">
+
+            <v-icon
+              small
+              @click="deleteItem(item)"
+            >
+              mdi-delete
+            </v-icon>
+          </template>
 
         </v-data-table>
 
         <v-card-actions>
-          <!-- <p>{{selected}}</p> -->
 
           <h2>{{Total}}</h2>
 
@@ -51,7 +55,7 @@
           <v-btn
             color="green darken-1"
             text
-            @click="dialog = false"
+            @click="Checkout()"
           >Agree</v-btn>
         </v-card-actions>
       </v-card>
@@ -71,7 +75,8 @@ export default {
         { text: "Type", value: "product.type" },
 
         { text: "select", value: "select" },
-        { text: "Amount", value: "quantity" }
+        { text: "Amount", value: "quantity" },
+        { text: "Actions", value: "actions", sortable: false }
       ]
     };
   },
@@ -90,16 +95,15 @@ export default {
     }
   },
   methods: {
-    Remove() {
-      for (let i = 0; i < this.selected.length; i++) {
-        this.$store.commit("cart/remove", this.selected[i]);
-      }
-
-      console.log("remove");
+    deleteItem(item) {
+      const index = this.cart.indexOf(item);
+      console.log(index);
+      confirm("Are you sure you want to delete this item?") &&
+        this.$store.commit("cart/remove", item);
     },
-    handleClick(value) {
-      console.log(value);
-      console.log("test");
+    async Checkout() {
+      this.$store.dispatch("cart/postOrder");
+      this.dialog = false;
     }
   }
 };
