@@ -39,7 +39,6 @@
 
                   <v-divider></v-divider>
 
-                  <v-stepper-step step="3">Name of step 3</v-stepper-step>
                 </v-stepper-header>
 
                 <v-stepper-items>
@@ -137,7 +136,7 @@
 
                     <v-btn
                       color="primary"
-                      @click="e1 = 3"
+                      @click="Checkout()"
                       v-if="valid != false"
                     >
                       Continue
@@ -146,22 +145,6 @@
                     <v-btn text>Cancel</v-btn>
                   </v-stepper-content>
 
-                  <v-stepper-content step="3">
-                    <v-card
-                      class="mb-12"
-                      color="grey lighten-1"
-                      height="200px"
-                    ></v-card>
-
-                    <v-btn
-                      color="primary"
-                      @click="e1 = 1"
-                    >
-                      Continue
-                    </v-btn>
-
-                    <v-btn text>Cancel</v-btn>
-                  </v-stepper-content>
                 </v-stepper-items>
               </v-stepper>
             </div>
@@ -230,10 +213,14 @@ export default {
       confirm("Are you sure you want to delete this item?") &&
         this.$store.commit("cart/remove", item);
     },
-    async Checkout() {
-      this.dialog2 = true;
-      // this.$store.dispatch("cart/postOrder");
-      // this.dialog = false;
+    Checkout() {
+      let info = {
+        name: this.firstname,
+        lastname: this.lastname,
+        phone: this.phone
+      };
+      this.$store.dispatch("cart/postOrder", info);
+      this.dialog = false;
     }
   }
 };
