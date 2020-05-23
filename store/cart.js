@@ -5,10 +5,12 @@ export const state = () => ({
 export const actions = {
   async postOrder({ state }) {
     console.log("test")
+
     const messageRef = this.$fireStore.collection("orders")
     try {
       await messageRef.add({
-        order: state.cart
+        order: state.cart,
+        data: new Date()
       });
     } catch (e) {
       alert(e);

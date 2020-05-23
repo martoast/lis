@@ -1,66 +1,179 @@
 <template>
-  <v-row justify="center">
-    <v-dialog
-      v-model="dialog"
-      v-if="cart.length > 0"
-      max-width="70%"
-    >
-      <template v-slot:activator="{ on }">
-        <v-btn
-          color="white"
-          text
-          v-on="on"
+  <div>
+    <div>
+      <v-row justify="center">
+        <v-dialog
+          v-model="dialog"
+          v-if="cart.length > 0"
+          max-width="70%"
         >
-          <span>{{cart.length}} X</span>
-          <v-icon x-large>
-            mdi-cart-outline
-          </v-icon>
-
-        </v-btn>
-      </template>
-      <v-card>
-        <v-card-title class="headline">Checkout</v-card-title>
-
-        <v-data-table
-          :headers="headers"
-          :items="cart"
-          hide-default-header
-          hide-default-footer
-          item-key="name"
-          class="elevation-1"
-        >
-          <template v-slot:item.actions="{ item }">
-
-            <v-icon
-              small
-              @click="deleteItem(item)"
+          <template v-slot:activator="{ on }">
+            <v-btn
+              color="white"
+              text
+              v-on="on"
             >
-              mdi-delete
-            </v-icon>
+              <span>{{cart.length}} X</span>
+              <v-icon x-large>
+                mdi-cart-outline
+              </v-icon>
+
+            </v-btn>
           </template>
+          <v-card>
+            <v-card-title class="headline">Checkout</v-card-title>
+            <div>
+              <v-stepper v-model="e1">
+                <v-stepper-header>
+                  <v-stepper-step
+                    :complete="e1 > 1"
+                    step="1"
+                  >Shopping Cart</v-stepper-step>
 
-        </v-data-table>
+                  <v-divider></v-divider>
 
-        <v-card-actions>
+                  <v-stepper-step
+                    :complete="e1 > 2"
+                    step="2"
+                  >Name of step 2</v-stepper-step>
 
-          <h2>{{Total}}</h2>
+                  <v-divider></v-divider>
 
-          <v-spacer></v-spacer>
-          <v-btn
-            color="green darken-1"
-            text
-            v-if="this.selected.length > 0"
-            @click="Remove()"
-          >Delete Items</v-btn>
-          <v-btn
-            color="green darken-1"
-            text
-            @click="Checkout()"
-          >Agree</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-  </v-row>
+                  <v-stepper-step step="3">Name of step 3</v-stepper-step>
+                </v-stepper-header>
+
+                <v-stepper-items>
+                  <v-stepper-content step="1">
+                    <v-card
+                      class="mb-12"
+                      color="transparent"
+                      flat
+                    >
+                      <v-data-table
+                        :headers="headers"
+                        :items="cart"
+                        hide-default-header
+                        hide-default-footer
+                        item-key="name"
+                        class="elevation-1"
+                      >
+                        <template v-slot:item.actions="{ item }">
+
+                          <v-icon
+                            small
+                            @click="deleteItem(item)"
+                          >
+                            mdi-delete
+                          </v-icon>
+                        </template>
+
+                      </v-data-table>
+                      <v-card-actions>
+                        <h2>Your total is: $ {{Total}}</h2>
+                      </v-card-actions>
+                    </v-card>
+
+                    <v-btn
+                      color="primary"
+                      @click="e1 = 2"
+                    >
+                      Continue
+                    </v-btn>
+
+                    <v-btn text>Cancel</v-btn>
+                  </v-stepper-content>
+
+                  <v-stepper-content step="2">
+                    <v-card
+                      class="mb-12"
+                      color="transparent"
+                      height="300px"
+                      flat
+                    >
+                      <v-form v-model="valid">
+                        <v-container>
+                          <v-row>
+                            <v-col
+                              cols="12"
+                              md="4"
+                            >
+                              <v-text-field
+                                v-model="firstname"
+                                :rules="nameRules"
+                                :counter="10"
+                                label="First name"
+                                required
+                              ></v-text-field>
+                            </v-col>
+
+                            <v-col
+                              cols="12"
+                              md="4"
+                            >
+                              <v-text-field
+                                v-model="lastname"
+                                :rules="nameRules"
+                                :counter="10"
+                                label="Last name"
+                                required
+                              ></v-text-field>
+                            </v-col>
+
+                            <v-col
+                              cols="12"
+                              md="4"
+                            >
+                              <v-text-field
+                                v-model="phone"
+                                :rules="phoneRules"
+                                label="Contact number*"
+                                required
+                              ></v-text-field>
+                            </v-col>
+                          </v-row>
+                        </v-container>
+                      </v-form>
+                    </v-card>
+
+                    <v-btn
+                      color="primary"
+                      @click="e1 = 3"
+                      v-if="valid != false"
+                    >
+                      Continue
+                    </v-btn>
+
+                    <v-btn text>Cancel</v-btn>
+                  </v-stepper-content>
+
+                  <v-stepper-content step="3">
+                    <v-card
+                      class="mb-12"
+                      color="grey lighten-1"
+                      height="200px"
+                    ></v-card>
+
+                    <v-btn
+                      color="primary"
+                      @click="e1 = 1"
+                    >
+                      Continue
+                    </v-btn>
+
+                    <v-btn text>Cancel</v-btn>
+                  </v-stepper-content>
+                </v-stepper-items>
+              </v-stepper>
+            </div>
+
+          </v-card>
+        </v-dialog>
+      </v-row>
+
+    </div>
+
+  </div>
+
 </template>
 <script>
 export default {
@@ -69,6 +182,7 @@ export default {
       dialog: false,
       dialog2: false,
       selected: [],
+      e1: 1,
 
       headers: [
         { text: "Item", value: "product.name" },
@@ -77,6 +191,21 @@ export default {
         { text: "select", value: "select" },
         { text: "Amount", value: "quantity" },
         { text: "Actions", value: "actions", sortable: false }
+      ],
+      valid: false,
+      firstname: "",
+      lastname: "",
+      nameRules: [
+        v => !!v || "Name is required",
+        v => v.length <= 10 || "Name must be less than 10 characters"
+      ],
+      phone: "",
+      phoneRules: [
+        v => !!v || "Phone is required",
+        v =>
+          /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im.test(
+            v
+          ) || "Phone must be valid"
       ]
     };
   },
@@ -102,8 +231,9 @@ export default {
         this.$store.commit("cart/remove", item);
     },
     async Checkout() {
-      this.$store.dispatch("cart/postOrder");
-      this.dialog = false;
+      this.dialog2 = true;
+      // this.$store.dispatch("cart/postOrder");
+      // this.dialog = false;
     }
   }
 };
