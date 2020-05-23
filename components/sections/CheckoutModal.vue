@@ -89,7 +89,19 @@
                       height="300px"
                       flat
                     >
-                      <v-form v-model="valid">
+                      <v-form
+                        v-model="valid"
+                        name="contactus"
+                        action="/thanks"
+                        method="post"
+                        netlify
+                        netlify-honeypot="bot-field"
+                      >
+                        <input
+                          type="hidden"
+                          name="form-name"
+                          value="contactus"
+                        />
                         <v-container>
                           <v-row>
                             <v-col
@@ -101,6 +113,8 @@
                                 :rules="nameRules"
                                 :counter="10"
                                 label="First name"
+                                for="name"
+                                name="name"
                                 required
                               ></v-text-field>
                             </v-col>
@@ -114,6 +128,8 @@
                                 :rules="nameRules"
                                 :counter="10"
                                 label="Last name"
+                                for="lastname"
+                                name="lastname"
                                 required
                               ></v-text-field>
                             </v-col>
@@ -126,6 +142,8 @@
                                 v-model="phone"
                                 :rules="phoneRules"
                                 label="Contact number*"
+                                for="phone"
+                                name="phone"
                                 required
                               ></v-text-field>
                             </v-col>
