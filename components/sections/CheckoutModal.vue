@@ -89,14 +89,7 @@
                       height="300px"
                       flat
                     >
-                      <v-form
-                        v-model="valid"
-                        name="contactus"
-                        action="/thanks"
-                        method="post"
-                        netlify
-                        netlify-honeypot="bot-field"
-                      >
+                      <v-form v-model="valid">
                         <input
                           type="hidden"
                           name="form-name"
