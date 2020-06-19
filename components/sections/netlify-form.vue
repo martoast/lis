@@ -6,7 +6,7 @@
     <v-row justify="center">
       <form
         name="contactus"
-        action="/thanks"
+        action="/"
         method="post"
         netlify
         netlify-honeypot="bot-field"
