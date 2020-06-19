@@ -5,7 +5,7 @@ export const state = () => ({
 
 export const actions = {
   async fetchProducts({ commit }) {
-    console.log("test")
+
     const messageRef = this.$fireStore.collection("products");
 
     await messageRef
@@ -16,6 +16,7 @@ export const actions = {
           console.log(doc.id, " => ", doc.data());
 
           commit("add", doc.data());
+
 
 
         });

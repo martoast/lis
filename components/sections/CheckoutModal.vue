@@ -149,18 +149,20 @@
                             </v-col>
                           </v-row>
                         </v-container>
+                        <v-btn
+                          type="submit"
+                          value="Send message"
+                          color="primary"
+                          @click="Checkout()"
+                          v-if="valid != false"
+                        >
+                          Continue
+                        </v-btn>
+
+                        <v-btn text>Cancel</v-btn>
                       </v-form>
                     </v-card>
 
-                    <v-btn
-                      color="primary"
-                      @click="Checkout()"
-                      v-if="valid != false"
-                    >
-                      Continue
-                    </v-btn>
-
-                    <v-btn text>Cancel</v-btn>
                   </v-stepper-content>
 
                 </v-stepper-items>
