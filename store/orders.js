@@ -35,20 +35,21 @@ export const mutations = {
 
   },
 
-  async remove(state, order) {
-    var orders = state.orders
-    orders.splice(orders.indexOf(order), 1)
+  async remove(orderID) {
+    let ID = orderID.toString()
+
     const messageRef = this.$fireStore
       .collection("orders")
-      .doc(order);
+      .doc(ID);
     try {
 
       await messageRef.delete();
+
     } catch (e) {
       alert(e);
       return;
     }
-    alert("Success.");
+
   },
 
 

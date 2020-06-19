@@ -87,6 +87,7 @@
             >
               I accept
             </v-btn>
+            <v-btn @click="CompletedOrder()">Completed</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -104,7 +105,7 @@ export default {
       dialog: false,
       Name: "",
       model: 1,
-
+      CurrentOrderID: null,
       CurrentOrder: []
     };
   },
@@ -126,7 +127,25 @@ export default {
       this.dialog = true;
       this.Name = order.info.name;
       this.CurrentOrder = order.order;
-      console.log(order.order);
+      this.CurrentOrderID = order.id;
+
+      console.log(this.CurrentOrder);
+    },
+    CompletedOrder() {
+      var orderID = this.CurrentOrderID;
+      console.log(orderID);
+      // this.$store.commit("orders/remove", orderID);
+      this.$fireStore
+        .collection("orders")
+        .doc(orderID)
+        .delete()
+        .then(function() {
+          console.log("Document successfully deleted!");
+          location.reload();
+        })
+        .catch(function(error) {
+          console.error("Error removing document: ", error);
+        });
     }
   }
 };

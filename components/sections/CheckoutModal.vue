@@ -90,11 +90,7 @@
                       flat
                     >
                       <v-form v-model="valid">
-                        <input
-                          type="hidden"
-                          name="form-name"
-                          value="contactus"
-                        />
+
                         <v-container>
                           <v-row>
                             <v-col
@@ -144,9 +140,8 @@
                         </v-container>
                         <v-btn
                           type="submit"
-                          value="Send message"
-                          color="primary"
                           @click="Checkout()"
+                          color="primary"
                           v-if="valid != false"
                         >
                           Continue

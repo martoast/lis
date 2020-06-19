@@ -4,11 +4,15 @@ export const state = () => ({
 
 export const actions = {
   async postOrder({ state }, info) {
-    console.log("test")
 
-    const messageRef = this.$fireStore.collection("orders")
+    var OrderID = Date.now()
+    let ID = OrderID.toString()
+    console.log(ID)
+
+    const messageRef = this.$fireStore.collection("orders").doc(ID)
     try {
-      await messageRef.add({
+      await messageRef.set({
+        id: ID,
         info: info,
         order: state.cart,
         data: new Date()
