@@ -121,8 +121,7 @@ export default {
     Checkout() {
       let info = {
         name: this.form.name,
-        phone: this.form.phone,
-        order: this.cart
+        phone: this.form.phone
       };
       this.$store.dispatch("cart/postOrder", info);
       this.dialog = false;

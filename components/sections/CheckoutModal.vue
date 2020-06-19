@@ -89,8 +89,78 @@
                       height="300px"
                       flat
                     >
+                      <v-form
+                        v-model="valid"
+                        name="contactus"
+                        action="/thanks"
+                        method="post"
+                        netlify
+                        netlify-honeypot="bot-field"
+                      >
+                        <input
+                          type="hidden"
+                          name="form-name"
+                          value="contactus"
+                        />
+                        <v-container>
+                          <v-row>
+                            <v-col
+                              cols="12"
+                              md="4"
+                            >
+                              <v-text-field
+                                v-model="firstname"
+                                :rules="nameRules"
+                                :counter="10"
+                                label="First name"
+                                for="name"
+                                name="name"
+                                required
+                              ></v-text-field>
+                            </v-col>
 
-                      <Netlify />
+                            <v-col
+                              cols="12"
+                              md="4"
+                            >
+                              <v-text-field
+                                v-model="lastname"
+                                :rules="nameRules"
+                                :counter="10"
+                                label="Last name"
+                                for="lastname"
+                                name="lastname"
+                                required
+                              ></v-text-field>
+                            </v-col>
+
+                            <v-col
+                              cols="12"
+                              md="4"
+                            >
+                              <v-text-field
+                                v-model="phone"
+                                :rules="phoneRules"
+                                label="Contact number*"
+                                for="phone"
+                                name="phone"
+                                required
+                              ></v-text-field>
+                            </v-col>
+                          </v-row>
+                        </v-container>
+                        <v-btn
+                          type="submit"
+                          value="Send message"
+                          color="primary"
+                          @click="Checkout()"
+                          v-if="valid != false"
+                        >
+                          Continue
+                        </v-btn>
+
+                        <v-btn text>Cancel</v-btn>
+                      </v-form>
                     </v-card>
 
                   </v-stepper-content>
@@ -120,14 +190,27 @@ export default {
       dialog2: false,
       selected: [],
       e1: 1,
-
       headers: [
         { text: "Item", value: "product.name" },
         { text: "Type", value: "product.type" },
-
         { text: "select", value: "select" },
         { text: "Amount", value: "quantity" },
         { text: "Actions", value: "actions", sortable: false }
+      ],
+      valid: false,
+      firstname: "",
+      lastname: "",
+      nameRules: [
+        v => !!v || "Name is required",
+        v => v.length <= 10 || "Name must be less than 10 characters"
+      ],
+      phone: "",
+      phoneRules: [
+        v => !!v || "Phone is required",
+        v =>
+          /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im.test(
+            v
+          ) || "Phone must be valid"
       ]
     };
   },
@@ -151,16 +234,16 @@ export default {
       console.log(index);
       confirm("Are you sure you want to delete this item?") &&
         this.$store.commit("cart/remove", item);
+    },
+    Checkout() {
+      let info = {
+        name: this.firstname,
+        lastname: this.lastname,
+        phone: this.phone
+      };
+      this.$store.dispatch("cart/postOrder", info);
+      this.dialog = false;
     }
-    // Checkout() {
-    //   let info = {
-    //     name: this.firstname,
-    //     lastname: this.lastname,
-    //     phone: this.phone
-    //   };
-    //   this.$store.dispatch("cart/postOrder", info);
-    //   this.dialog = false;
-    // }
   }
 };
 </script>
