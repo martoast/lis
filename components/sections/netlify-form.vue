@@ -1,5 +1,8 @@
 <template>
-  <v-container pt-12>
+  <v-container
+    pt-12
+    id="contact-us"
+  >
     <v-row justify="center">
       <form
         name="contactus"
@@ -53,6 +56,7 @@
                       type="submit"
                       value="Send message"
                       color="primary"
+                      @click="Checkout()"
                     >Send</v-btn>
                   </v-col>
                 </v-container>
@@ -73,18 +77,16 @@ export default {
     return {
       form: {
         name: "",
-        email: "",
         phone: "",
         order: this.cart
       },
       valid: false,
-      firstname: "",
-      lastname: "",
+
       nameRules: [
         v => !!v || "Name is required",
         v => v.length <= 10 || "Name must be less than 10 characters"
       ],
-      phone: "",
+
       phoneRules: [
         v => !!v || "Phone is required",
         v =>
@@ -115,6 +117,15 @@ export default {
       })
         .then(() => alert("Success!"))
         .catch(error => alert(error));
+    },
+    Checkout() {
+      let info = {
+        name: this.form.name,
+        phone: this.form.phone,
+        order: this.cart
+      };
+      this.$store.dispatch("cart/postOrder", info);
+      this.dialog = false;
     }
   }
 };

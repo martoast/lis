@@ -151,16 +151,16 @@ export default {
       console.log(index);
       confirm("Are you sure you want to delete this item?") &&
         this.$store.commit("cart/remove", item);
-    },
-    Checkout() {
-      let info = {
-        name: this.firstname,
-        lastname: this.lastname,
-        phone: this.phone
-      };
-      this.$store.dispatch("cart/postOrder", info);
-      this.dialog = false;
     }
+    // Checkout() {
+    //   let info = {
+    //     name: this.firstname,
+    //     lastname: this.lastname,
+    //     phone: this.phone
+    //   };
+    //   this.$store.dispatch("cart/postOrder", info);
+    //   this.dialog = false;
+    // }
   }
 };
 </script>
