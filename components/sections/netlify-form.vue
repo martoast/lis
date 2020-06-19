@@ -1,80 +1,69 @@
 <template>
-  <v-container
-    pt-12
-    fill-height
-  >
-    <form
-      name="contactus"
-      action="/thanks"
-      method="post"
-      netlify
-      netlify-honeypot="bot-field"
-    >
-      <input
-        type="hidden"
-        name="form-name"
-        value="contactus"
-      />
-      <v-container fill-height>
-        <v-card
-          color="rgb(245,245,245, 0.4)"
-          flat
-        >
-          <v-row>
-            <v-col cols="12">
-              <div>
-                <v-text-field
-                  label="Your Name*"
-                  for="name"
-                  type="text"
-                  name="name"
-                  outlined
-                  required
-                  color="primary"
-                />
-              </div>
-            </v-col>
-            <v-col cols="12">
-              <div>
-                <v-text-field
-                  label="Your Email*"
-                  for="email"
-                  type="email"
-                  name="email"
-                  required
-                  outlined
-                  color="primary"
-                />
-              </div>
-            </v-col>
-
-            <v-col cols="12">
-              <div>
-                <v-textarea
-                  label="Your Message*"
-                  for="message"
-                  name="message"
-                  required
-                  outlined
-                  color="primary"
-                />
-              </div>
-            </v-col>
-            <div>
-              <v-container>
-                <v-col text-center>
-                  <v-btn
-                    type="submit"
-                    value="Send message"
+  <v-container pt-12>
+    <v-row justify="center">
+      <form
+        name="contactus"
+        action="/thanks"
+        method="post"
+        netlify
+        netlify-honeypot="bot-field"
+      >
+        <input
+          type="hidden"
+          name="form-name"
+          value="contactus"
+        />
+        <v-container fill-height>
+          <v-card
+            color="transparent"
+            flat
+          >
+            <v-row>
+              <v-col cols="12">
+                <div>
+                  <v-text-field
+                    label="Your Name*"
+                    for="name"
+                    type="text"
+                    name="name"
+                    outlined
+                    required
                     color="primary"
-                  >Send</v-btn>
-                </v-col>
-              </v-container>
-            </div>
-          </v-row>
-        </v-card>
-      </v-container>
-    </form>
+                  />
+                </div>
+              </v-col>
+
+              <v-col cols="12">
+                <div>
+                  <v-text-field
+                    label="Your Number*"
+                    for="phone"
+                    type="text"
+                    name="phone"
+                    required
+                    outlined
+                    color="primary"
+                  />
+                </div>
+              </v-col>
+              <div>
+                <v-container>
+                  <v-col text-center>
+                    <v-btn
+                      type="submit"
+                      value="Send message"
+                      color="primary"
+                    >Send</v-btn>
+                  </v-col>
+                </v-container>
+              </div>
+            </v-row>
+          </v-card>
+        </v-container>
+      </form>
+
+    </v-row>
+
   </v-container>
 </template>
 
@@ -85,9 +74,30 @@ export default {
       form: {
         name: "",
         email: "",
-        message: ""
-      }
+        phone: "",
+        order: this.cart
+      },
+      valid: false,
+      firstname: "",
+      lastname: "",
+      nameRules: [
+        v => !!v || "Name is required",
+        v => v.length <= 10 || "Name must be less than 10 characters"
+      ],
+      phone: "",
+      phoneRules: [
+        v => !!v || "Phone is required",
+        v =>
+          /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im.test(
+            v
+          ) || "Phone must be valid"
+      ]
     };
+  },
+  computed: {
+    cart() {
+      return this.$store.state.cart.cart;
+    }
   },
   methods: {
     encode(data) {
